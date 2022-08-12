@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FinalProject</string>
+
+    <string name="main_navigation_home">Home</string>
+    <string name="main_navigation_favorites">Favourites</string>
+    <string name="main_navigation_settings">Settings</string>
 </resources>
