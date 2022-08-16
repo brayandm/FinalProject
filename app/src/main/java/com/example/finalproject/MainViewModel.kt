@@ -26,8 +26,8 @@ class MainViewModel : ViewModel() {
         _weatherItem.postValue(weatherItem)
     }
 
-    fun loadWeather()
+    fun setIsWeatherLoad(isWeatherLoad : Boolean)
     {
-        _isWeatherLoad.postValue(true)
+        _isWeatherLoad.postValue(isWeatherLoad)
     }
 }

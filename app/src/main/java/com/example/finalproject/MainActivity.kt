@@ -31,6 +31,8 @@ class MainActivity : ComponentActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
+        viewModel.setIsWeatherLoad(false)
+
         setContent {
             FinalProjectTheme {
                 // A surface container using the 'background' color from the theme
