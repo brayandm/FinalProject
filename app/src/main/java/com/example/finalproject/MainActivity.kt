@@ -10,6 +10,8 @@ import androidx.compose.material.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.example.finalproject.api.WeatherApiClient
+import com.example.finalproject.api.WeatherApiProvider
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.navigation.AddBottomBarNavigation
 import com.example.finalproject.navigation.AddNavigationContent
@@ -19,7 +21,7 @@ import com.google.android.gms.location.LocationServices
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     lateinit var viewModel : MainViewModel
 
@@ -28,8 +30,6 @@ class MainActivity : ComponentActivity() {
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-        fetchLocation(this, fusedLocationProviderClient)
 
         setContent {
             FinalProjectTheme {
