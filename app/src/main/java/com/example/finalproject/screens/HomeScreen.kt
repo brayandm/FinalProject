@@ -64,6 +64,8 @@ fun HomeScreen(context: MainActivity) {
                 Image(painter = painterResource(id = drawableResourceId), contentDescription = "Weather Icon",
                     modifier = Modifier.size(200.dp))
 
+                Spacer(modifier = Modifier.padding(10.dp))
+
 
                 Row() {
                     Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)

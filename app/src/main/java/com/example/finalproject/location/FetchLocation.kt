@@ -19,20 +19,17 @@ fun fetchLocation(context: MainActivity, fusedLocationProviderClient: FusedLocat
 
     task.addOnSuccessListener {
         if (it != null) {
-            Toast.makeText(context, "${it.latitude}, ${it.longitude}", Toast.LENGTH_SHORT).show()
             Log.d("Success", "${it.latitude}, ${it.longitude}")
 
             context.viewModel.setLocation(Location(it.latitude, it.longitude))
         }
         else
         {
-            Toast.makeText(context, "FetchLocation failed", Toast.LENGTH_SHORT).show()
             Log.d("Failure", "FetchLocation failed")
         }
     }
 
     task.addOnFailureListener() {
-        Toast.makeText(context, "FetchLocation failed", Toast.LENGTH_SHORT).show()
         Log.d("Failure", "FetchLocation failed")
     }
 }
