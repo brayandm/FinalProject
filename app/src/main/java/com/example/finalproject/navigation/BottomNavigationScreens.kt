@@ -1,7 +1,9 @@
 package com.example.finalproject.navigation
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.finalproject.MainActivity
 import com.example.finalproject.R
 import com.example.finalproject.screens.FavoritesScreen
 import com.example.finalproject.screens.HomeScreen
@@ -86,10 +89,10 @@ fun AddBottomBarNavigation(navController: NavHostController) {
 }
 
 @Composable
-fun AddNavigationContent(navController: NavHostController) {
+fun AddNavigationContent(context: MainActivity, navController: NavHostController) {
     NavHost(navController, startDestination = BottomNavigationScreens.Home.route) {
         composable(BottomNavigationScreens.Home.route) {
-            HomeScreen()
+            HomeScreen(context)
         }
 
         composable(BottomNavigationScreens.Favorites.route) {

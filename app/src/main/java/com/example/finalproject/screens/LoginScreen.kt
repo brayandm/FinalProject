@@ -25,8 +25,10 @@ fun LoginScreen(context: LoginActivity, auth: FirebaseAuth) {
     var username = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
 
-    Column (horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center){
+    Column (horizontalAlignment = Alignment.CenterHorizontally){
+
+        Spacer(modifier = Modifier.padding(20.dp))
+
         TextField(
             value = username.value,
             onValueChange = { username.value = it },
