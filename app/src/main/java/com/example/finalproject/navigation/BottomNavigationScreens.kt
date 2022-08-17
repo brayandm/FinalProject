@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -34,7 +35,7 @@ sealed class BottomNavigationScreens(
 }
 
 @Composable
-fun AddBottomBarNavigation(navController: NavHostController) {
+fun AddBottomBarNavigation(context: MainActivity, navController: NavHostController) {
 
     val items = listOf(
         BottomNavigationScreens.Home,
@@ -42,7 +43,7 @@ fun AddBottomBarNavigation(navController: NavHostController) {
         BottomNavigationScreens.Settings
     )
 
-    val selectedIndex = remember { mutableStateOf(0) }
+    val selectedIndex = context.viewModel.indexBottomNavigation.observeAsState(0)
 
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.onSurface,
@@ -71,15 +72,10 @@ fun AddBottomBarNavigation(navController: NavHostController) {
                 alwaysShowLabel = true,
                 onClick = {
                     if (!isSelected) {
-                        selectedIndex.value = index
-                        navController.navigate(screen.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
+                        context.viewModel.setIndexBottomNavigation(index)
+                        context.viewModel.navigationStack.value?.push(items[context.viewModel.indexBottomNavigation.value!!])
 
-                            launchSingleTop = true
-                            restoreState = true
-                        }
+                        navController.navigate(screen.route)
                     }
                 }
             )

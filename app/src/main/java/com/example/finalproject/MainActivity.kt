@@ -64,7 +64,8 @@ class MainActivity : ComponentActivity() {
 
                         Scaffold(
                             bottomBar = {
-                                AddBottomBarNavigation(navController = navController)
+                                AddBottomBarNavigation(context = this@MainActivity,
+                                    navController = navController)
                             }
                         ) {
                             Column(
@@ -83,6 +84,18 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (!viewModel.navigationStack.value!!.empty()) {
+            val top = viewModel.navigationStack.value!!.pop()
+            when(top.route) {
+                "Home" -> viewModel.setIndexBottomNavigation(0)
+                "Favorites" -> viewModel.setIndexBottomNavigation(1)
+                "Settings" -> viewModel.setIndexBottomNavigation(2)
+            }
+        }
+        super.onBackPressed()
     }
 
     fun logout(auth: FirebaseAuth)
