@@ -55,6 +55,7 @@ fun HomeScreen(context: MainActivity) {
 
             Divider(thickness = 1.dp)
         }
+        Spacer(modifier = Modifier.padding(20.dp))
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
