@@ -57,6 +57,20 @@ class LoginActivity : ComponentActivity() {
     fun register(auth: FirebaseAuth, username: MutableState<String>,
                          password: MutableState<String>)
     {
+        if(username.value == "")
+        {
+            Toast.makeText(applicationContext, "Username field is empty",
+                Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if(password.value == "")
+        {
+            Toast.makeText(applicationContext, "Password field is empty",
+                Toast.LENGTH_LONG).show()
+            return
+        }
+
         auth.createUserWithEmailAndPassword(
             username.value,
             password.value
@@ -76,6 +90,20 @@ class LoginActivity : ComponentActivity() {
     fun login(auth: FirebaseAuth, username: MutableState<String>,
                       password: MutableState<String>)
     {
+        if(username.value == "")
+        {
+            Toast.makeText(applicationContext, "Username field is empty",
+                Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if(password.value == "")
+        {
+            Toast.makeText(applicationContext, "Password field is empty",
+                Toast.LENGTH_LONG).show()
+            return
+        }
+
         auth.signInWithEmailAndPassword(
             username.value,
             password.value
