@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -33,12 +34,13 @@ class MainActivity : ComponentActivity() {
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    lateinit var viewModel : MainViewModel
+    val viewModel: MainViewModel by viewModels() {
+        MainViewModel((application as AppApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         viewModel.setIsWeatherLoad(false)
@@ -105,6 +107,12 @@ class MainActivity : ComponentActivity() {
             Toast.LENGTH_LONG).show()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
+    }
+
+    fun showCities() {
+        viewModel.getCityFavoritesFromDatabase().observe(this) {
+            Log.d("showCities", "Found on db: $it")
+        }
     }
 }
 

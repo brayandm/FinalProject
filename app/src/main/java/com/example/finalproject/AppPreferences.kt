@@ -4,25 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.activity.ComponentActivity
+import com.example.finalproject.repository.AppDatabase
+import com.example.finalproject.repository.CityFavoriteRepository
 
 val appPreferences: AppPreferences by lazy {
-    App.appPreferences!!
-}
-
-class App: Application()
-{
-    companion object {
-        var appPreferences: AppPreferences? = null
-        lateinit var instance: App
-            private set
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-
-        instance = this
-        appPreferences = AppPreferences(applicationContext)
-    }
+    AppApplication.appPreferences!!
 }
 
 class AppPreferences(context: Context) {
