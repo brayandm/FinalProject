@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -15,14 +16,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.finalproject.MainActivity
+import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.BottomNavigationScreens
 
 @Composable
-fun FavoritesScreen() {
+fun FavoritesScreen(context: MainActivity) {
     Column {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())) {
             Spacer(modifier = Modifier.padding(10.dp),)
 
             Text(text = "Favorites", fontSize = 35.sp)
@@ -31,5 +36,17 @@ fun FavoritesScreen() {
         }
 
         Divider(thickness = 1.dp)
+        
+        context.viewModel.addCityFavorite(CityFavorite(1,"Havana", "Cuba"))
+        context.viewModel.addCityFavorite(CityFavorite(2,"Barcelona", "Spain"))
+
+        val cityFavorites = context.viewModel.getCityFavoritesFromDatabase().observeAsState()
+
+        Column() {
+            for(city in cityFavorites.value?: listOf())
+            {
+                Text(text = "${city.cityName}, ${city.countryName}")
+            }
+        }
     }
 }

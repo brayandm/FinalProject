@@ -16,12 +16,14 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
     private val _location = MutableLiveData<Location>(Location(.0,.0))
     private val _weatherItem = MutableLiveData<WeatherItem>()
     private val _isWeatherLoad = MutableLiveData(false)
+    private val _isLocationLoad = MutableLiveData(false)
     private val _indexBottomNavigation = MutableLiveData(0)
     private val _navigationStack = MutableLiveData(Stack<BottomNavigationScreens>())
 
     val location : LiveData<Location> = _location
     val weatherItem : LiveData<WeatherItem> = _weatherItem
     val isWeatherLoad : LiveData<Boolean> = _isWeatherLoad
+    val isLocationLoad : LiveData<Boolean> = _isLocationLoad
     val indexBottomNavigation : LiveData<Int> = _indexBottomNavigation
     val navigationStack : LiveData<Stack<BottomNavigationScreens>> = _navigationStack
 
@@ -41,6 +43,11 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
         _isWeatherLoad.postValue(isWeatherLoad)
     }
 
+    fun setIsLocationLoad(isLocationLoad : Boolean)
+    {
+        _isLocationLoad.postValue(isLocationLoad)
+    }
+
     fun setIndexBottomNavigation(indexBottomNavigation : Int)
     {
         _indexBottomNavigation.postValue(indexBottomNavigation)
@@ -48,7 +55,7 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
 
     fun getCityFavoritesFromDatabase(): LiveData<List<CityFavorite>>
     {
-        return repository.allItems
+        return repository.allItems()
     }
 
     fun addCityFavorite(cityFavorite : CityFavorite)

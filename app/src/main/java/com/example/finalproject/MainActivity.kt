@@ -41,9 +41,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
         viewModel.setIsWeatherLoad(false)
+        viewModel.setIsLocationLoad(false)
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {
 

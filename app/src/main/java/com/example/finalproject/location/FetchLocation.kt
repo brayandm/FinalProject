@@ -22,6 +22,7 @@ fun fetchLocation(context: MainActivity, fusedLocationProviderClient: FusedLocat
             Log.d("Success", "${it.latitude}, ${it.longitude}")
 
             context.viewModel.setLocation(Location(it.latitude, it.longitude))
+            context.viewModel.setIsLocationLoad(true)
         }
         else
         {

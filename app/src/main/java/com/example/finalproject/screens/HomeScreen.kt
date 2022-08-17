@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.finalproject.Animation.LoadingAnimation
 import com.example.finalproject.MainActivity
 import com.example.finalproject.MainViewModel
 import com.example.finalproject.R
@@ -36,12 +37,13 @@ import com.example.finalproject.navigation.BottomNavigationScreens
 import com.google.android.gms.location.FusedLocationProviderClient
 
 @Composable
-fun HomeScreen(context: MainActivity, isFahrenheit: MutableState<Boolean>) {
+fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahrenheit: MutableState<Boolean>) {
 
     fetchLocation(context, context.fusedLocationProviderClient)
 
     val location = context.viewModel.location.observeAsState(Location(.0,.0))
     val isWeatherLoad = context.viewModel.isWeatherLoad.observeAsState(false)
+    val isLocationLoad = context.viewModel.isLocationLoad.observeAsState(false)
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
@@ -104,6 +106,16 @@ fun HomeScreen(context: MainActivity, isFahrenheit: MutableState<Boolean>) {
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 Text(text = weatherData.weather?.description!!, fontSize = 30.sp)
+            }
+            else
+            {
+                Spacer(modifier = Modifier.padding(100.dp))
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center) {
+
+                    LoadingAnimation(darkMode = isDarkTheme)
+                }
             }
         }
     }

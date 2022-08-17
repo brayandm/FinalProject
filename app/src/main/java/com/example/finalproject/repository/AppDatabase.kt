@@ -19,7 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-                val db = Room.databaseBuilder(context, AppDatabase::class.java, "unsplash_db").build()
+                val db = Room.databaseBuilder(context, AppDatabase::class.java, "db").build()
                 INSTANCE = db
                 db
             }
