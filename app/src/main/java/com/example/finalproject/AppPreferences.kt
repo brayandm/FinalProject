@@ -5,9 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.activity.ComponentActivity
 
-const val KEY_OPTION = "DarkMode"
-const val DEFAULT_OPTION_VALUE = false
-
 val appPreferences: AppPreferences by lazy {
     App.appPreferences!!
 }
@@ -34,12 +31,23 @@ class AppPreferences(context: Context) {
 
     fun setDarkMode(value: Boolean) {
         with (preferences.edit()) {
-            putBoolean(KEY_OPTION, value)
+            putBoolean("DarkMode", value)
+            apply()
+        }
+    }
+
+    fun setFahrenheit(value: Boolean) {
+        with (preferences.edit()) {
+            putBoolean("Fahrenheit", value)
             apply()
         }
     }
 
     fun getDarkMode(): Boolean {
-        return preferences.getBoolean(KEY_OPTION, DEFAULT_OPTION_VALUE)
+        return preferences.getBoolean("DarkMode", false)
+    }
+
+    fun getFahrenheit(): Boolean {
+        return preferences.getBoolean("Fahrenheit", false)
     }
 }

@@ -46,6 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val isDarkTheme = remember { mutableStateOf(appPreferences.getDarkMode()) }
+            val isFahrenheit = remember { mutableStateOf(appPreferences.getFahrenheit()) }
 
             FinalProjectTheme {
 
@@ -74,6 +75,7 @@ class MainActivity : ComponentActivity() {
                                 AddNavigationContent(context = this@MainActivity,
                                     navController = navController,
                                     isDarkTheme = isDarkTheme,
+                                    isFahrenheit = isFahrenheit,
                                     appPreferences = appPreferences)
                             }
                         }

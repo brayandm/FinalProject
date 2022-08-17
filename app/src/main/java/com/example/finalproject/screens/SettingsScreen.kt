@@ -34,7 +34,7 @@ import com.google.firebase.ktx.Firebase
 
 @Composable
 fun SettingsScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>,
-                   appPreferences: AppPreferences) {
+                   isFahrenheit: MutableState<Boolean>, appPreferences: AppPreferences) {
     Column {
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,7 +54,7 @@ fun SettingsScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>,
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Text(text = "Dark Mode", fontSize = 20.sp)
+            Text(text = "Dark Mode", fontSize = 20.sp, modifier = Modifier.width(120.dp))
 
             Spacer(modifier = Modifier.padding(10.dp))
 
@@ -63,6 +63,29 @@ fun SettingsScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>,
                 onCheckedChange = {
                     isDarkTheme.value = !isDarkTheme.value
                     appPreferences.setDarkMode(isDarkTheme.value)
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Divider(thickness = 1.dp)
+
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Text(text = "Fahrenheit", fontSize = 20.sp, modifier = Modifier.width(120.dp))
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Switch(
+                checked = isFahrenheit.value,
+                onCheckedChange = {
+                    isFahrenheit.value = !isFahrenheit.value
+                    appPreferences.setFahrenheit(isFahrenheit.value)
                 }
             )
         }
@@ -86,6 +109,5 @@ fun SettingsScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>,
                 }
             }
         }
-
     }
 }

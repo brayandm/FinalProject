@@ -89,7 +89,8 @@ fun AddBottomBarNavigation(navController: NavHostController) {
 
 @Composable
 fun AddNavigationContent(context: MainActivity, navController: NavHostController,
-                         isDarkTheme: State<Boolean>, appPreferences: AppPreferences) {
+                         isDarkTheme: State<Boolean>, isFahrenheit: State<Boolean>,
+                         appPreferences: AppPreferences) {
     NavHost(navController, startDestination = BottomNavigationScreens.Home.route) {
         composable(BottomNavigationScreens.Home.route) {
             HomeScreen(context)
@@ -100,7 +101,8 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
         }
 
         composable(BottomNavigationScreens.Settings.route) {
-            SettingsScreen(context, isDarkTheme as MutableState<Boolean>, appPreferences)
+            SettingsScreen(context, isDarkTheme as MutableState<Boolean>,
+                isFahrenheit as MutableState<Boolean>, appPreferences)
         }
     }
 }
