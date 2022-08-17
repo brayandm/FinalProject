@@ -22,6 +22,8 @@ import com.example.finalproject.api.WeatherApiProvider
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.navigation.AddBottomBarNavigation
 import com.example.finalproject.navigation.AddNavigationContent
+import com.example.finalproject.systemui.SystemUiNavigationNar
+import com.example.finalproject.systemui.SystemUiStatusBar
 import com.example.finalproject.ui.theme.FinalProjectTheme
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -35,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         val appPreferences = AppPreferences(this)
 
@@ -51,6 +54,9 @@ class MainActivity : ComponentActivity() {
 
                 MaterialTheme(colors = if(isDarkTheme.value) darkColors() else lightColors())
                 {
+                    SystemUiStatusBar(window = window).setStatusBarColor(MaterialTheme.colors.primary, isDarkTheme.value)
+                    SystemUiNavigationNar(window = window).setNavigationBarColor(MaterialTheme.colors.primary, isDarkTheme.value)
+
                     // A surface container using the 'background' color from the theme
                     Surface(
                         modifier = Modifier.fillMaxSize(),

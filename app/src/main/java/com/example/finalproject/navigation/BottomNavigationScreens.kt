@@ -66,8 +66,8 @@ fun AddBottomBarNavigation(navController: NavHostController) {
                     )
                 },
                 selected = isSelected,
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.DarkGray,
+                selectedContentColor = MaterialTheme.colors.primary,
+                unselectedContentColor = MaterialTheme.colors.onPrimary,
                 alwaysShowLabel = true,
                 onClick = {
                     if (!isSelected) {
