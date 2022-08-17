@@ -10,6 +10,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -59,7 +63,8 @@ fun LoginScreen(context: LoginActivity, auth: FirebaseAuth) {
             label = { Text("Password") },
             modifier = Modifier
                 .width(300.dp)
-                .height(60.dp)
+                .height(60.dp),
+            visualTransformation = PasswordVisualTransformation()
         )
 
         Spacer(modifier = Modifier.padding(10.dp))

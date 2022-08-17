@@ -93,7 +93,7 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
                          appPreferences: AppPreferences) {
     NavHost(navController, startDestination = BottomNavigationScreens.Home.route) {
         composable(BottomNavigationScreens.Home.route) {
-            HomeScreen(context)
+            HomeScreen(context, isFahrenheit as MutableState<Boolean>)
         }
 
         composable(BottomNavigationScreens.Favorites.route) {

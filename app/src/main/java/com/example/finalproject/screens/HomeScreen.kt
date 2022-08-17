@@ -10,6 +10,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +36,7 @@ import com.example.finalproject.navigation.BottomNavigationScreens
 import com.google.android.gms.location.FusedLocationProviderClient
 
 @Composable
-fun HomeScreen(context: MainActivity) {
+fun HomeScreen(context: MainActivity, isFahrenheit: MutableState<Boolean>) {
 
     fetchLocation(context, context.fusedLocationProviderClient)
 
@@ -87,8 +88,16 @@ fun HomeScreen(context: MainActivity) {
 
 
                     Row() {
-                        Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)
-                        Text(text = "°C", fontSize = 30.sp,)
+                        if(isFahrenheit.value)
+                        {
+                            Text(text = ((weatherData.temp ?: 0.0) * 9.0 / 5.0 + 32.0).toInt().toString(), fontSize = 50.sp)
+                            Text(text = "°F", fontSize = 30.sp,)
+                        }
+                        else
+                        {
+                            Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)
+                            Text(text = "°C", fontSize = 30.sp,)
+                        }
                     }
                 }
 
