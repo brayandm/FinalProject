@@ -38,9 +38,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        val appPreferences = AppPreferences(this)
-
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 

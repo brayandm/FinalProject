@@ -16,6 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import com.example.finalproject.screens.LoginScreen
+import com.example.finalproject.systemui.SystemUiNavigationNar
+import com.example.finalproject.systemui.SystemUiStatusBar
 import com.example.finalproject.ui.theme.FinalProjectTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -25,20 +27,28 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val isDarkTheme = remember { mutableStateOf(appPreferences.getDarkMode()) }
+
             FinalProjectTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    val auth = Firebase.auth
+                MaterialTheme(colors = if(isDarkTheme.value) darkColors() else lightColors())
+                {
+                    SystemUiStatusBar(window = window).setStatusBarColor(MaterialTheme.colors.primary, isDarkTheme.value)
+                    SystemUiNavigationNar(window = window).setNavigationBarColor(MaterialTheme.colors.primary, isDarkTheme.value)
 
-                    if (auth.currentUser != null) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
+                    // A surface container using the 'background' color from the theme
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colors.background
+                    ) {
+                        val auth = Firebase.auth
+
+                        if (auth.currentUser != null) {
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }
+
+                        LoginScreen(this, auth)
                     }
-
-                    LoginScreen(this, auth)
                 }
             }
         }
