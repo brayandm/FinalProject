@@ -52,6 +52,8 @@ class LoginActivity : ComponentActivity() {
             password.value
         ).addOnCompleteListener {
             if (it.isSuccessful) {
+                Toast.makeText(applicationContext, "Successful registration",
+                    Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
@@ -69,6 +71,8 @@ class LoginActivity : ComponentActivity() {
             password.value
         ).addOnCompleteListener {
             if (it.isSuccessful) {
+                Toast.makeText(applicationContext, "Successful login",
+                    Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {

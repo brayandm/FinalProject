@@ -6,9 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -18,6 +16,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.finalproject.AppPreferences
 import com.example.finalproject.MainActivity
 import com.example.finalproject.R
 import com.example.finalproject.screens.FavoritesScreen
@@ -89,7 +88,8 @@ fun AddBottomBarNavigation(navController: NavHostController) {
 }
 
 @Composable
-fun AddNavigationContent(context: MainActivity, navController: NavHostController) {
+fun AddNavigationContent(context: MainActivity, navController: NavHostController,
+                         isDarkTheme: State<Boolean>, appPreferences: AppPreferences) {
     NavHost(navController, startDestination = BottomNavigationScreens.Home.route) {
         composable(BottomNavigationScreens.Home.route) {
             HomeScreen(context)
@@ -100,7 +100,7 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
         }
 
         composable(BottomNavigationScreens.Settings.route) {
-            SettingsScreen()
+            SettingsScreen(context, isDarkTheme as MutableState<Boolean>, appPreferences)
         }
     }
 }

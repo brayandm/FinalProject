@@ -2,7 +2,11 @@ package com.example.finalproject.screens
 
 import android.content.Context
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
@@ -38,44 +42,59 @@ fun HomeScreen(context: MainActivity) {
     val location = context.viewModel.location.observeAsState(Location(.0,.0))
     val isWeatherLoad = context.viewModel.isWeatherLoad.observeAsState(false)
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
-    modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
-        val provider = WeatherApiProvider()
-        provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
-
-        if(isWeatherLoad.value)
-        {
-            val weatherItem = context.viewModel.weatherItem.observeAsState()
-
-            val weatherData = weatherItem.value?.data?.last()!!
-
-            Text(text = weatherData.city_name.toString(), fontSize = 60.sp, textAlign = TextAlign.Center)
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()) {
 
             Spacer(modifier = Modifier.padding(10.dp))
 
-            Row(horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Home", fontSize = 35.sp)
 
-                val drawableResourceId = context.resources.getIdentifier(weatherData.weather?.icon, "drawable",
-                    "com.example.finalproject")
+            Spacer(modifier = Modifier.padding(10.dp))
 
-                Image(painter = painterResource(id = drawableResourceId), contentDescription = "Weather Icon",
-                    modifier = Modifier.size(200.dp))
+            Divider(thickness = 1.dp)
+        }
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()) {
+
+            val provider = WeatherApiProvider()
+            provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
+
+            if(isWeatherLoad.value)
+            {
+                val weatherItem = context.viewModel.weatherItem.observeAsState()
+
+                val weatherData = weatherItem.value?.data?.last()!!
+
+                Text(text = weatherData.city_name.toString(), fontSize = 60.sp, textAlign = TextAlign.Center)
 
                 Spacer(modifier = Modifier.padding(10.dp))
 
+                Row(horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically) {
 
-                Row() {
-                    Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)
-                    Text(text = "°C", fontSize = 30.sp,)
+                    val drawableResourceId = context.resources.getIdentifier(weatherData.weather?.icon, "drawable",
+                        "com.example.finalproject")
+
+                    Image(painter = painterResource(id = drawableResourceId), contentDescription = "Weather Icon",
+                        modifier = Modifier.size(200.dp))
+
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+
+                    Row() {
+                        Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)
+                        Text(text = "°C", fontSize = 30.sp,)
+                    }
                 }
+
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                Text(text = weatherData.weather?.description!!, fontSize = 30.sp)
             }
-
-            Spacer(modifier = Modifier.padding(10.dp))
-
-            Text(text = weatherData.weather?.description!!, fontSize = 30.sp)
         }
     }
 }

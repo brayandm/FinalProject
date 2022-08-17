@@ -2,6 +2,8 @@ package com.example.finalproject.screens
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -25,7 +27,8 @@ fun LoginScreen(context: LoginActivity, auth: FirebaseAuth) {
     var username = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
 
-    Column (horizontalAlignment = Alignment.CenterHorizontally){
+    Column (horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.verticalScroll(rememberScrollState())){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
