@@ -11,7 +11,7 @@ import java.util.concurrent.Executors
 @Database(entities = [CityFavorite::class,], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun unsplashDao(): UnsplashItemDao
+    abstract fun cityFavoriteDao(): CityFavoriteDao
 
     companion object {
         @Volatile

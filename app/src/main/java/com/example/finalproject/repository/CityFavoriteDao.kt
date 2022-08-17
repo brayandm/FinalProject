@@ -8,9 +8,9 @@ import androidx.room.Query
 import com.example.finalproject.model.CityFavorite
 
 @Dao
-interface UnsplashItemDao {
+interface CityFavoriteDao {
 
-    @Query("SELECT * FROM UnsplashItem")
+    @Query("SELECT * FROM CityFavorite")
     fun getItems(): LiveData<List<CityFavorite>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
