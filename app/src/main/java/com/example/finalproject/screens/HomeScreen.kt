@@ -82,8 +82,11 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                 Row(verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center) {
 
-                    Text(text = weatherData.city_name.toString(), fontSize = 60.sp,
-                        textAlign = TextAlign.Center, modifier = Modifier.width(300.dp))
+                    Text(text = weatherData.city_name.toString(), fontSize = 50.sp,
+                        textAlign = TextAlign.Center, modifier = Modifier.width(250.dp))
+
+                    Text(text = "(" + weatherData.country_code.toString() + ")", fontSize = 25.sp,
+                        textAlign = TextAlign.Center)
 
                     Spacer(modifier = Modifier.padding(10.dp))
 
