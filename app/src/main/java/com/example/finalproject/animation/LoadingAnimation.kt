@@ -1,4 +1,4 @@
-package com.example.finalproject.Animation
+package com.example.finalproject.animation
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -14,10 +14,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun LoadingAnimation(darkMode: MutableState<Boolean>) {
-    var circles = listOf(
+    val circles = listOf(
         remember { Animatable(initialValue = 0f) },
         remember { Animatable(initialValue = 0f) },
         remember { Animatable(initialValue = 0f) },

@@ -1,32 +1,23 @@
 package com.example.finalproject.screens
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.example.finalproject.Animation.LoadingAnimation
+import com.example.finalproject.animation.LoadingAnimation
 import com.example.finalproject.MainActivity
-import com.example.finalproject.MainViewModel
 import com.example.finalproject.R
 import com.example.finalproject.api.WeatherApiProvider
 import com.example.finalproject.appPreferences
@@ -34,10 +25,7 @@ import com.example.finalproject.location.Location
 import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.CityFavorite
-import com.example.finalproject.model.Data
-import com.example.finalproject.model.WeatherItem
 import com.example.finalproject.navigation.BottomNavigationScreens
-import com.google.android.gms.location.FusedLocationProviderClient
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
