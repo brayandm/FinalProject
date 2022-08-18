@@ -26,6 +26,7 @@ import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.BottomNavigationScreens
+import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -123,12 +124,12 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                     Row {
                         if(isFahrenheit.value)
                         {
-                            Text(text = ((weatherData.temp ?: 0.0) * 9.0 / 5.0 + 32.0).toInt().toString(), fontSize = 50.sp)
+                            Text(text = ((weatherData.temp ?: 0.0) * 9.0 / 5.0 + 32.0).roundToInt().toString(), fontSize = 50.sp)
                             Text(text = "°F", fontSize = 30.sp)
                         }
                         else
                         {
-                            Text(text = weatherData.temp?.toInt().toString(), fontSize = 50.sp)
+                            Text(text = weatherData.temp?.roundToInt().toString(), fontSize = 50.sp)
                             Text(text = "°C", fontSize = 30.sp)
                         }
                     }
