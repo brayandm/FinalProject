@@ -25,6 +25,7 @@ import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.BottomNavigationScreens
+import com.example.finalproject.utils.Utils
 import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -92,8 +93,8 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                     FloatingActionButton(
                         onClick = {
                             context.viewModel.addCityFavorite(CityFavorite(
-                                weatherData.city_name.toString() + " : " +
-                                        weatherData.country_code.toString(),
+                                Utils().getID(weatherData.city_name.toString(),
+                                    weatherData.country_code.toString()),
                                 weatherData.city_name.toString(),
                                 weatherData.country_code.toString()))
                             context.viewModel.setIndexBottomNavigation(2)

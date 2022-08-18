@@ -1,5 +1,6 @@
 package com.example.finalproject
 
+import com.example.finalproject.utils.Utils
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,13 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+    }
+
+    @Test
+    fun utils_getId_isCorrect()
+    {
+        assertEquals(Utils().getID("Havana", "Cuba"), "Havana : Cuba")
+        assertEquals(Utils().getID("New York City", "US"), "New York City : US")
+        assertEquals(Utils().getID("Barcelona", "Spain"), "Barcelona : Spain")
     }
 }
