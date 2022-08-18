@@ -20,7 +20,6 @@ import com.example.finalproject.animation.LoadingAnimation
 import com.example.finalproject.MainActivity
 import com.example.finalproject.R
 import com.example.finalproject.api.WeatherApiProvider
-import com.example.finalproject.appPreferences
 import com.example.finalproject.location.Location
 import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
@@ -93,7 +92,9 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                     FloatingActionButton(
                         onClick = {
                             context.viewModel.addCityFavorite(CityFavorite(
-                                appPreferences.getCount(), weatherData.city_name.toString(),
+                                weatherData.city_name.toString() + " : " +
+                                        weatherData.country_code.toString(),
+                                weatherData.city_name.toString(),
                                 weatherData.country_code.toString()))
                             context.viewModel.setIndexBottomNavigation(2)
                             context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Home)

@@ -10,10 +10,10 @@ interface CityFavoriteDao {
     @Query("SELECT * FROM CityFavorite")
     fun getItems(): LiveData<List<CityFavorite>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertItem(item: CityFavorite)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertItems(items: List<CityFavorite>)
 
     @Delete

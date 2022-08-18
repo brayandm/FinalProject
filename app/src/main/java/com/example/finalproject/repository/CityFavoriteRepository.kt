@@ -23,12 +23,6 @@ class CityFavoriteRepository(private val cityFavoriteDao: CityFavoriteDao) {
         }
     }
 
-    fun insertItems(items: List<CityFavorite>) {
-        AppDatabase.databaseWriteExecutor.execute {
-            cityFavoriteDao.insertItems(items)
-        }
-    }
-
     fun deleteItem(item: CityFavorite) {
         AppDatabase.databaseWriteExecutor.execute {
             cityFavoriteDao.deleteItem(item)

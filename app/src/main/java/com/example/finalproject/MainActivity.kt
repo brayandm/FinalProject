@@ -39,12 +39,6 @@ class MainActivity : ComponentActivity() {
         viewModel.setIsLocationLoad(false)
         viewModel.setIsLocationCityLoad(false)
 
-        viewModel.addCityFavorite(CityFavorite(0, "Havana", "Cuba"))
-        viewModel.addCityFavorite(CityFavorite(1, "Barcelona", "Spain"))
-        viewModel.addCityFavorite(CityFavorite(2, "Tokyo", "Japan"))
-        viewModel.addCityFavorite(CityFavorite(3, "New York", "US"))
-        appPreferences.setCount(4)
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {

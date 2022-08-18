@@ -44,12 +44,14 @@ fun FavoritesScreen(context: MainActivity, navController: NavHostController, isD
 
         val cityFavorites = context.viewModel.getCityFavoritesFromDatabase().observeAsState()
 
+        val listCity = cityFavorites.value ?: listOf()
+
         LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
             .height(380.dp)) {
 
-            itemsIndexed(cityFavorites.value ?: listOf())
+            itemsIndexed(listCity.reversed())
             { index, city ->
                 run {
                     if(index > 0)Spacer(modifier = Modifier.padding(10.dp))
