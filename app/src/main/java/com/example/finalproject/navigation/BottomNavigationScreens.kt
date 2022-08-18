@@ -89,7 +89,8 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
                          appPreferences: AppPreferences) {
     NavHost(navController, startDestination = BottomNavigationScreens.Home.route) {
         composable(BottomNavigationScreens.Home.route) {
-            HomeScreen(context, isDarkTheme as MutableState<Boolean>,
+            HomeScreen(context, navController,
+                isDarkTheme as MutableState<Boolean>,
                 isFahrenheit as MutableState<Boolean>)
         }
 

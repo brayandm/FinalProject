@@ -2,7 +2,13 @@ package com.example.finalproject.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -27,7 +33,7 @@ import com.example.finalproject.navigation.BottomNavigationScreens
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun FavoritesScreen(context: MainActivity, navController: NavHostController, isDarkTheme: MutableState<Boolean>) {
-    Column {
+    Column (){
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -46,83 +52,116 @@ fun FavoritesScreen(context: MainActivity, navController: NavHostController, isD
 
         val cityFavorites = context.viewModel.getCityFavoritesFromDatabase().observeAsState()
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()) {
+        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(380.dp)) {
 
-            for(city in cityFavorites.value?: listOf())
-            {
-                Row()
-                {
+            itemsIndexed(cityFavorites.value ?: listOf())
+            { index, city ->
+                run {
+                    if(index > 0)Spacer(modifier = Modifier.padding(10.dp))
 
-                    Surface(
-                        shape = MaterialTheme.shapes.medium,
-                        elevation = 1.dp,
-                        // surfaceColor color will be changing gradually from primary to surface
-                        color = if(isDarkTheme.value) darkColors().primary else lightColors().primary,
-                        // animateContentSize will change the Surface size gradually
-                        modifier = Modifier
-                            .animateContentSize()
-                            .padding(1.dp)
-                            .width(350.dp)
-                            .height(50.dp),
-                    )
+                    Row()
                     {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
 
-                            IconButton(onClick = {
-                                context.viewModel.setLocationCity(LocationCity(city.cityName, city.countryName))
-                                context.viewModel.setIsMyLocation(false)
-                                context.viewModel.setIndexBottomNavigation(0)
-                                context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Favorites)
-                                navController.navigate(BottomNavigationScreens.Home.route)}) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_search),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(20.dp)
+                        Surface(
+                            shape = MaterialTheme.shapes.medium,
+                            elevation = 1.dp,
+                            // surfaceColor color will be changing gradually from primary to surface
+                            color = if (isDarkTheme.value) darkColors().primary else lightColors().primary,
+                            // animateContentSize will change the Surface size gradually
+                            modifier = Modifier
+                                .animateContentSize()
+                                .padding(1.dp)
+                                .width(350.dp)
+                                .height(50.dp),
+                        )
+                        {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+
+                                IconButton(onClick = {
+                                    context.viewModel.setLocationCity(
+                                        LocationCity(
+                                            city.cityName,
+                                            city.countryName
+                                        )
+                                    )
+                                    context.viewModel.setIsMyLocation(false)
+                                    context.viewModel.setIndexBottomNavigation(0)
+                                    context.viewModel.navigationStack.value!!.push(
+                                        BottomNavigationScreens.Favorites
+                                    )
+                                    navController.navigate(BottomNavigationScreens.Home.route)
+                                }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_search),
+                                        contentDescription = "",
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+
+                                IconButton(onClick = { context.viewModel.deleteCityFavorite(city)}) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_delete),
+                                        contentDescription = "",
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                }
+
+                                Spacer(modifier = Modifier.padding(20.dp))
+
+                                Text(
+                                    text = "${city.cityName}, ${city.countryName}",
+                                    color = if (isDarkTheme.value) darkColors().onPrimary else lightColors().onPrimary,
+                                    fontSize = 20.sp
                                 )
                             }
-
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_delete),
-                                    contentDescription = "",
-                                    modifier = Modifier.size(20.dp)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.padding(20.dp))
-
-                            Text(text = "${city.cityName}, ${city.countryName}",
-                                color = if(isDarkTheme.value) darkColors().onPrimary else lightColors().onPrimary,
-                                fontSize = 20.sp)
                         }
                     }
                 }
-
-                Spacer(modifier = Modifier.padding(10.dp))
             }
+        }
 
-            Scaffold(
-                topBar = {},
-                bottomBar = {},
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = {
-                            context.viewModel.setIsMyLocation(true)
-                            context.viewModel.setIndexBottomNavigation(0)
-                            context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Favorites)
-                            navController.navigate(BottomNavigationScreens.Home.route) },
-                        content = {
+        Spacer(modifier = Modifier.padding(10.dp))
 
-                            Icon(painter = painterResource(R.drawable.ic_location),
-                                contentDescription = "", modifier = Modifier.padding(20.dp)
-                                    .size(30.dp))
-                        },
-                        backgroundColor = MaterialTheme.colors.primary
-                    )
-                },
-                content = {})
+        Divider(thickness = 1.dp)
+
+        Column(horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Bottom,
+        modifier = Modifier.fillMaxSize()) {
+
+            Row {
+                FloatingActionButton(
+                    onClick = {
+                        context.viewModel.deleteAll()},
+                    content = {
+
+                        Icon(painter = painterResource(R.drawable.ic_delete),
+                            contentDescription = "", modifier = Modifier
+                                .padding(20.dp)
+                                .size(30.dp))
+                    },
+                    backgroundColor = MaterialTheme.colors.primary,
+                    modifier = Modifier.padding(20.dp)
+                )
+                FloatingActionButton(
+                    onClick = {
+                        context.viewModel.setIsMyLocation(true)
+                        context.viewModel.setIndexBottomNavigation(0)
+                        context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Favorites)
+                        navController.navigate(BottomNavigationScreens.Home.route) },
+                    content = {
+
+                        Icon(painter = painterResource(R.drawable.ic_location),
+                            contentDescription = "", modifier = Modifier
+                                .padding(20.dp)
+                                .size(30.dp))
+                    },
+                    backgroundColor = MaterialTheme.colors.primary,
+                    modifier = Modifier.padding(20.dp)
+                )
+            }
         }
     }
 }

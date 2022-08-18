@@ -84,6 +84,16 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
         repository.insertItem(cityFavorite)
     }
 
+    fun deleteCityFavorite(cityFavorite : CityFavorite)
+    {
+        repository.deleteItem(cityFavorite)
+    }
+
+    fun deleteAll()
+    {
+        repository.deleteAll()
+    }
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

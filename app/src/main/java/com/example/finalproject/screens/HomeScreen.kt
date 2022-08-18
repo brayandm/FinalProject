@@ -29,9 +29,11 @@ import com.example.finalproject.MainActivity
 import com.example.finalproject.MainViewModel
 import com.example.finalproject.R
 import com.example.finalproject.api.WeatherApiProvider
+import com.example.finalproject.appPreferences
 import com.example.finalproject.location.Location
 import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
+import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.model.Data
 import com.example.finalproject.model.WeatherItem
 import com.example.finalproject.navigation.BottomNavigationScreens
@@ -39,7 +41,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahrenheit: MutableState<Boolean>) {
+fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTheme: MutableState<Boolean>, isFahrenheit: MutableState<Boolean>) {
 
     fetchLocation(context, context.fusedLocationProviderClient)
 
@@ -65,30 +67,56 @@ fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahr
         }
         Spacer(modifier = Modifier.padding(20.dp))
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxWidth()) {
+        val provider = WeatherApiProvider()
 
-            val provider = WeatherApiProvider()
+        if(isMyLocation.value)
+        {
+            provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
+        }
+        else
+        {
+            provider.fetchWeatherInfoCity(context, locationCity.value.city, locationCity.value.country)
+        }
 
-            if(isMyLocation.value)
-            {
-                provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
-            }
-            else
-            {
-                provider.fetchWeatherInfoCity(context, locationCity.value.city, locationCity.value.country)
-            }
+        if(((!isMyLocation.value && isLocationCityLoad.value) ||
+                    (isMyLocation.value && isLocationLoad.value)) &&
+            isWeatherLoad.value)
+        {
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()) {
 
-            if(((!isMyLocation.value && isLocationCityLoad.value) ||
-                        (isMyLocation.value && isLocationLoad.value)) &&
-                isWeatherLoad.value)
-            {
                 val weatherItem = context.viewModel.weatherItem.observeAsState()
 
                 val weatherData = weatherItem.value?.data?.last()!!
 
-                Text(text = weatherData.city_name.toString(), fontSize = 60.sp, textAlign = TextAlign.Center)
+                Row(verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center) {
+
+                    Text(text = weatherData.city_name.toString(), fontSize = 60.sp,
+                        textAlign = TextAlign.Center, modifier = Modifier.width(300.dp))
+
+                    Spacer(modifier = Modifier.padding(10.dp))
+
+                    FloatingActionButton(
+                        onClick = {
+                            context.viewModel.addCityFavorite(CityFavorite(
+                                appPreferences.getCount(), weatherData.city_name.toString(),
+                                weatherData.country_code.toString()))
+                            context.viewModel.setIndexBottomNavigation(1)
+                            context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Home)
+                            navController.navigate(BottomNavigationScreens.Favorites.route) },
+                        content = {
+
+                            Icon(painter = painterResource(R.drawable.ic_favourite),
+                                contentDescription = "", modifier = Modifier
+                                    .padding(20.dp)
+                                    .size(20.dp))
+                        },
+                        backgroundColor = MaterialTheme.colors.primary,
+                    )
+                }
+
 
                 Spacer(modifier = Modifier.padding(10.dp))
 
@@ -121,13 +149,20 @@ fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahr
                 Spacer(modifier = Modifier.padding(10.dp))
 
                 Text(text = weatherData.weather?.description!!, fontSize = 30.sp)
+
             }
-            else
-            {
+        }
+        else
+        {
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.padding(100.dp))
 
-                Column(horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
 
                     LoadingAnimation(darkMode = isDarkTheme)
                 }
