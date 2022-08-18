@@ -14,8 +14,8 @@ import java.util.*
 
 class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(), ViewModelProvider.Factory {
 
-    private val _location = MutableLiveData<Location>(Location(.0,.0))
-    private val _locationCity = MutableLiveData<LocationCity>(LocationCity("Barcelona","Spain"))
+    private val _location = MutableLiveData(Location(.0,.0))
+    private val _locationCity = MutableLiveData(LocationCity("Barcelona","Spain"))
     private val _weatherItem = MutableLiveData<WeatherItem>()
     private val _isWeatherLoad = MutableLiveData(false)
     private val _isLocationLoad = MutableLiveData(false)

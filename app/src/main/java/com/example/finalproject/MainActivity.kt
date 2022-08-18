@@ -2,7 +2,6 @@ package com.example.finalproject
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,16 +10,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
-import com.example.finalproject.api.WeatherApiClient
-import com.example.finalproject.api.WeatherApiProvider
-import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.AddBottomBarNavigation
 import com.example.finalproject.navigation.AddNavigationContent
@@ -35,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    val viewModel: MainViewModel by viewModels() {
+    val viewModel: MainViewModel by viewModels {
         MainViewModel((application as AppApplication).repository)
     }
 
@@ -117,12 +110,6 @@ class MainActivity : ComponentActivity() {
             Toast.LENGTH_LONG).show()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
-    }
-
-    fun showCities() {
-        viewModel.getCityFavoritesFromDatabase().observe(this) {
-            Log.d("showCities", "Found on db: $it")
-        }
     }
 }
 

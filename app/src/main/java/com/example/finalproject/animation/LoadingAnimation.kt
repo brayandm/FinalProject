@@ -22,10 +22,10 @@ fun LoadingAnimation(darkMode: MutableState<Boolean>) {
         remember { Animatable(initialValue = 0f) },
     )
 
-    circles.forEachIndexed { index, animatable ->
-        LaunchedEffect(key1 = animatable) {
+    circles.forEachIndexed { index, animate ->
+        LaunchedEffect(key1 = animate) {
             delay(index * 100L)
-            animatable.animateTo(
+            animate.animateTo(
                 targetValue = 1f,
                 animationSpec = infiniteRepeatable(
                     animation = keyframes {

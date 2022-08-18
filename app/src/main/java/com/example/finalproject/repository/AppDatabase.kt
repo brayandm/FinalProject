@@ -8,7 +8,7 @@ import com.example.finalproject.model.CityFavorite
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-@Database(entities = [CityFavorite::class,], version = 1, exportSchema = false)
+@Database(entities = [CityFavorite::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun cityFavoriteDao(): CityFavoriteDao

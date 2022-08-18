@@ -1,11 +1,6 @@
 package com.example.finalproject
 
-import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.activity.ComponentActivity
-import com.example.finalproject.repository.AppDatabase
-import com.example.finalproject.repository.CityFavoriteRepository
 
 val appPreferences: AppPreferences by lazy {
     AppApplication.appPreferences!!

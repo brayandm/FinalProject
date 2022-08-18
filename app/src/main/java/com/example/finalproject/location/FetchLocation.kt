@@ -2,7 +2,6 @@ package com.example.finalproject.location
 
 import android.content.pm.PackageManager
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.example.finalproject.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -30,7 +29,7 @@ fun fetchLocation(context: MainActivity, fusedLocationProviderClient: FusedLocat
         }
     }
 
-    task.addOnFailureListener() {
+    task.addOnFailureListener {
         Log.d("Failure", "FetchLocation failed")
     }
 }

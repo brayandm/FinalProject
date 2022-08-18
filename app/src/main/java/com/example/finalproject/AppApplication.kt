@@ -20,7 +20,7 @@ class AppApplication: Application()
         appPreferences = AppPreferences(applicationContext)
     }
 
-    val database by lazy { AppDatabase.getDatabase(this) }
+    private val database by lazy { AppDatabase.getDatabase(this) }
 
     val repository by lazy { CityFavoriteRepository(database.cityFavoriteDao()) }
 }
