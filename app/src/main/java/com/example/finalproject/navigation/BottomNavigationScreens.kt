@@ -94,7 +94,7 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
         }
 
         composable(BottomNavigationScreens.Search.route) {
-            SearchScreen()
+            SearchScreen(context, navController)
         }
 
         composable(BottomNavigationScreens.Favorites.route) {
