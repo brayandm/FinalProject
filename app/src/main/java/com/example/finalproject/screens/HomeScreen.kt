@@ -103,7 +103,7 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                             context.viewModel.addCityFavorite(CityFavorite(
                                 appPreferences.getCount(), weatherData.city_name.toString(),
                                 weatherData.country_code.toString()))
-                            context.viewModel.setIndexBottomNavigation(1)
+                            context.viewModel.setIndexBottomNavigation(2)
                             context.viewModel.navigationStack.value!!.push(BottomNavigationScreens.Home)
                             navController.navigate(BottomNavigationScreens.Favorites.route) },
                         content = {

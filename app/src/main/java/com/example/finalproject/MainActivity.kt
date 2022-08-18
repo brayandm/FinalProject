@@ -102,8 +102,9 @@ class MainActivity : ComponentActivity() {
             val top = viewModel.navigationStack.value!!.pop()
             when(top.route) {
                 "Home" -> viewModel.setIndexBottomNavigation(0)
-                "Favorites" -> viewModel.setIndexBottomNavigation(1)
-                "Settings" -> viewModel.setIndexBottomNavigation(2)
+                "Search" -> viewModel.setIndexBottomNavigation(1)
+                "Favorites" -> viewModel.setIndexBottomNavigation(2)
+                "Settings" -> viewModel.setIndexBottomNavigation(3)
             }
         }
         super.onBackPressed()

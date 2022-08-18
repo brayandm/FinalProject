@@ -22,6 +22,7 @@ import com.example.finalproject.MainActivity
 import com.example.finalproject.R
 import com.example.finalproject.screens.FavoritesScreen
 import com.example.finalproject.screens.HomeScreen
+import com.example.finalproject.screens.SearchScreen
 import com.example.finalproject.screens.SettingsScreen
 
 sealed class BottomNavigationScreens(
@@ -30,6 +31,7 @@ sealed class BottomNavigationScreens(
     @DrawableRes val drawResId: Int
 ) {
     object Home : BottomNavigationScreens("Home", R.string.main_navigation_home, R.drawable.ic_home)
+    object Search : BottomNavigationScreens("Search", R.string.main_navigation_search, R.drawable.ic_search)
     object Favorites : BottomNavigationScreens("Favorites", R.string.main_navigation_favorites, R.drawable.ic_favourite)
     object Settings : BottomNavigationScreens("Settings", R.string.main_navigation_settings, R.drawable.ic_settings)
 }
@@ -39,6 +41,7 @@ fun AddBottomBarNavigation(context: MainActivity, navController: NavHostControll
 
     val items = listOf(
         BottomNavigationScreens.Home,
+        BottomNavigationScreens.Search,
         BottomNavigationScreens.Favorites,
         BottomNavigationScreens.Settings
     )
@@ -92,6 +95,10 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
             HomeScreen(context, navController,
                 isDarkTheme as MutableState<Boolean>,
                 isFahrenheit as MutableState<Boolean>)
+        }
+
+        composable(BottomNavigationScreens.Search.route) {
+            SearchScreen()
         }
 
         composable(BottomNavigationScreens.Favorites.route) {
