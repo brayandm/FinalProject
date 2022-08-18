@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-private const val ACCESS_KEY = "e5befbf826f546e4a1498a2226bb9b96"
+private const val ACCESS_KEY = "597c2e7136bb417e8f20a563139e1162"
 
 interface WeatherApiClient {
     @GET("v2.0/current/")
