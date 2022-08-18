@@ -26,6 +26,7 @@ import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.BottomNavigationScreens
 import com.example.finalproject.utils.Utils
+import kotlin.math.round
 import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -55,7 +56,7 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
 
             Divider(thickness = 1.dp)
         }
-        Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(10.dp))
 
         val provider = WeatherApiProvider()
 
@@ -82,13 +83,14 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
                     (isMyLocation.value && isLocationLoad.value &&
                             location.value.latitude != null && location.value.longitude != null && isWeatherLoad.value))
         {
+            val weatherItem = context.viewModel.weatherItem.observeAsState()
+
+            val weatherData = weatherItem.value?.data?.last()!!
+
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()) {
 
-                val weatherItem = context.viewModel.weatherItem.observeAsState()
-
-                val weatherData = weatherItem.value?.data?.last()!!
 
                 Row(verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center) {
@@ -155,6 +157,12 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
 
                 Text(text = weatherData.weather?.description!!, fontSize = 30.sp)
 
+                Spacer(modifier = Modifier.padding(10.dp))
+
+                Text(text = "Precipitation: " + round((weatherData.precip ?: .0)).toString() + " mm/h", fontSize = 20.sp)
+                Text(text = "Pressure: " + round((weatherData.pres ?: .0)).toString() + " mb", fontSize = 20.sp)
+                Text(text = "Humidity: " + round(weatherData.rh ?: .0).toString() + " %", fontSize = 20.sp)
+                Text(text = "Wind: " + round((weatherData.wind_spd ?: .0) * 3.6).toString() + " km/h", fontSize = 20.sp)
             }
         }
         else
