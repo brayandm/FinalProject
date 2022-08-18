@@ -14,4 +14,8 @@ interface WeatherApiClient {
     fun fetchWeatherInfo(@Query(value = "lat") lat : Double,
                       @Query(value = "lon") lon : Double,
                          @Query(value = "key") key : String = ACCESS_KEY): Call<WeatherItem>
+    @GET("v2.0/current/")
+    fun fetchWeatherInfoCity(@Query(value = "city") city : String,
+                         @Query(value = "country") country : String,
+                         @Query(value = "key") key : String = ACCESS_KEY): Call<WeatherItem>
 }

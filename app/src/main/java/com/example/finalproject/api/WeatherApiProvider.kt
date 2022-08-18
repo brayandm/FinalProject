@@ -31,24 +31,48 @@ class WeatherApiProvider {
 
     fun fetchWeatherInfo(context: MainActivity, lat: Double, lon: Double) {
 
-//        retrofit.fetchWeatherInfo(lat, lon).enqueue(object : Callback<WeatherItem> {
-//
-//            override fun onResponse(
-//                call: Call<WeatherItem>,
-//                response: Response<WeatherItem>
-//            ) {
-//                if (response.isSuccessful && response.body() != null) {
-//                    Log.d(TAG, "Response: ${response.body()}")
-//                    context.viewModel.setWeatherItem(response.body()!!)
-//                    context.viewModel.setIsWeatherLoad(true)
-//                } else {
-//                    Log.e(TAG, "Error Fetching WeatherItem")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<WeatherItem>, t: Throwable) {
-//                Log.e(TAG, "Error Fetching WeatherItem", t)
-//            }
-//        })
+        retrofit.fetchWeatherInfo(lat, lon).enqueue(object : Callback<WeatherItem> {
+
+            override fun onResponse(
+                call: Call<WeatherItem>,
+                response: Response<WeatherItem>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d(TAG, "Response: ${response.body()}")
+                    context.viewModel.setWeatherItem(response.body()!!)
+                    context.viewModel.setIsWeatherLoad(true)
+                } else {
+                    Log.e(TAG, "Error Fetching WeatherItem")
+                }
+            }
+
+            override fun onFailure(call: Call<WeatherItem>, t: Throwable) {
+                Log.e(TAG, "Error Fetching WeatherItem", t)
+            }
+        })
+    }
+
+    fun fetchWeatherInfoCity(context: MainActivity, city: String, country : String) {
+
+        retrofit.fetchWeatherInfoCity(city, country).enqueue(object : Callback<WeatherItem> {
+
+            override fun onResponse(
+                call: Call<WeatherItem>,
+                response: Response<WeatherItem>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d(TAG, "Response: ${response.body()}")
+                    context.viewModel.setWeatherItem(response.body()!!)
+                    context.viewModel.setIsWeatherLoad(true)
+                    context.viewModel.setIsLocationCityLoad(true)
+                } else {
+                    Log.e(TAG, "Error Fetching WeatherItem")
+                }
+            }
+
+            override fun onFailure(call: Call<WeatherItem>, t: Throwable) {
+                Log.e(TAG, "Error Fetching WeatherItem", t)
+            }
+        })
     }
 }

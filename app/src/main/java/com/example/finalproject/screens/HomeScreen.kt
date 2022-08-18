@@ -1,13 +1,13 @@
 package com.example.finalproject.screens
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -30,20 +30,25 @@ import com.example.finalproject.MainViewModel
 import com.example.finalproject.R
 import com.example.finalproject.api.WeatherApiProvider
 import com.example.finalproject.location.Location
+import com.example.finalproject.location.LocationCity
 import com.example.finalproject.location.fetchLocation
 import com.example.finalproject.model.Data
 import com.example.finalproject.model.WeatherItem
 import com.example.finalproject.navigation.BottomNavigationScreens
 import com.google.android.gms.location.FusedLocationProviderClient
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahrenheit: MutableState<Boolean>) {
 
     fetchLocation(context, context.fusedLocationProviderClient)
 
     val location = context.viewModel.location.observeAsState(Location(.0,.0))
+    val locationCity = context.viewModel.locationCity.observeAsState(LocationCity("Barcelona","Spain"))
     val isWeatherLoad = context.viewModel.isWeatherLoad.observeAsState(false)
     val isLocationLoad = context.viewModel.isLocationLoad.observeAsState(false)
+    val isLocationCityLoad = context.viewModel.isLocationCityLoad.observeAsState(false)
+    val isMyLocation = context.viewModel.isMyLocation.observeAsState(true)
 
     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
 
@@ -62,12 +67,22 @@ fun HomeScreen(context: MainActivity, isDarkTheme: MutableState<Boolean>, isFahr
 
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()) {
+        modifier = Modifier.fillMaxWidth()) {
 
             val provider = WeatherApiProvider()
-            provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
 
-            if(isWeatherLoad.value)
+            if(isMyLocation.value)
+            {
+                provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
+            }
+            else
+            {
+                provider.fetchWeatherInfoCity(context, locationCity.value.city, locationCity.value.country)
+            }
+
+            if(((!isMyLocation.value && isLocationCityLoad.value) ||
+                        (isMyLocation.value && isLocationLoad.value)) &&
+                isWeatherLoad.value)
             {
                 val weatherItem = context.viewModel.weatherItem.observeAsState()
 

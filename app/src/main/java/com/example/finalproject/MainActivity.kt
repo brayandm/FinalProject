@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.finalproject.api.WeatherApiClient
 import com.example.finalproject.api.WeatherApiProvider
 import com.example.finalproject.location.fetchLocation
+import com.example.finalproject.model.CityFavorite
 import com.example.finalproject.navigation.AddBottomBarNavigation
 import com.example.finalproject.navigation.AddNavigationContent
 import com.example.finalproject.systemui.SystemUiNavigationNar
@@ -43,6 +44,10 @@ class MainActivity : ComponentActivity() {
 
         viewModel.setIsWeatherLoad(false)
         viewModel.setIsLocationLoad(false)
+        viewModel.setIsLocationCityLoad(false)
+
+        viewModel.addCityFavorite(CityFavorite(1,"Havana", "Cuba"))
+        viewModel.addCityFavorite(CityFavorite(2,"Barcelona", "Spain"))
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 

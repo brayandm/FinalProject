@@ -94,7 +94,7 @@ fun AddNavigationContent(context: MainActivity, navController: NavHostController
         }
 
         composable(BottomNavigationScreens.Favorites.route) {
-            FavoritesScreen(context)
+            FavoritesScreen(context, navController, isDarkTheme as MutableState<Boolean>)
         }
 
         composable(BottomNavigationScreens.Settings.route) {
