@@ -14,6 +14,7 @@ import com.example.finalproject.screens.LoginScreen
 import com.example.finalproject.systemui.SystemUiNavigationNar
 import com.example.finalproject.systemui.SystemUiStatusBar
 import com.example.finalproject.ui.theme.FinalProjectTheme
+import com.example.finalproject.utils.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -64,6 +65,29 @@ class LoginActivity : ComponentActivity() {
             Toast.makeText(applicationContext, "Password field is empty",
                 Toast.LENGTH_LONG).show()
             return
+        }
+
+        if(!Utils().isGoodPassword(password.value))
+        {
+            if(password.value.length < 8)
+            {
+                Toast.makeText(applicationContext, "Insecure password, it should have at least 8 " +
+                        "characters",
+                    Toast.LENGTH_LONG).show()
+                return
+            }
+            if(!Utils().containsLetter(password.value))
+            {
+                Toast.makeText(applicationContext, "Insecure password, it should have at least a letter",
+                    Toast.LENGTH_LONG).show()
+                return
+            }
+            if(!Utils().containsDigit(password.value))
+            {
+                Toast.makeText(applicationContext, "Insecure password, it should have at least a digit",
+                    Toast.LENGTH_LONG).show()
+                return
+            }
         }
 
         auth.createUserWithEmailAndPassword(

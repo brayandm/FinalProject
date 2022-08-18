@@ -14,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.finalproject.model.CityFavorite
+
 import com.example.finalproject.navigation.AddBottomBarNavigation
 import com.example.finalproject.navigation.AddNavigationContent
 import com.example.finalproject.systemui.SystemUiNavigationNar
