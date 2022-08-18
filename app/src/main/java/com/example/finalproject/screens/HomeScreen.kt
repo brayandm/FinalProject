@@ -34,9 +34,10 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
 
     fetchLocation(context, context.fusedLocationProviderClient)
 
-    val location = context.viewModel.location.observeAsState(Location(.0,.0))
-    val locationCity = context.viewModel.locationCity.observeAsState(LocationCity("Barcelona","Spain"))
+    val location = context.viewModel.location.observeAsState(Location())
+    val locationCity = context.viewModel.locationCity.observeAsState(LocationCity())
     val isWeatherLoad = context.viewModel.isWeatherLoad.observeAsState(false)
+    val isWeatherCityLoad = context.viewModel.isWeatherCityLoad.observeAsState(false)
     val isLocationLoad = context.viewModel.isLocationLoad.observeAsState(false)
     val isLocationCityLoad = context.viewModel.isLocationCityLoad.observeAsState(false)
     val isMyLocation = context.viewModel.isMyLocation.observeAsState(true)
@@ -60,16 +61,26 @@ fun HomeScreen(context: MainActivity, navController: NavHostController, isDarkTh
 
         if(isMyLocation.value)
         {
-            provider.fetchWeatherInfo(context, location.value.latitude, location.value.longitude)
+            if(location.value.latitude != null && location.value.longitude != null)
+            {
+                provider.fetchWeatherInfo(context,
+                    location.value.latitude!!, location.value.longitude!!)
+            }
         }
         else
         {
-            provider.fetchWeatherInfoCity(context, locationCity.value.city, locationCity.value.country)
+            if(locationCity.value.city != null && locationCity.value.country != null) {
+                provider.fetchWeatherInfoCity(
+                    context,
+                    locationCity.value.city!!,
+                    locationCity.value.country!!
+                )
+            }
         }
 
-        if(((!isMyLocation.value && isLocationCityLoad.value) ||
-                    (isMyLocation.value && isLocationLoad.value)) &&
-            isWeatherLoad.value)
+        if((!isMyLocation.value && isLocationCityLoad.value && isWeatherCityLoad.value) ||
+                    (isMyLocation.value && isLocationLoad.value &&
+                            location.value.latitude != null && location.value.longitude != null && isWeatherLoad.value))
         {
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,

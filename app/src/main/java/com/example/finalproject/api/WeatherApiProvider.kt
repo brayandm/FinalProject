@@ -63,7 +63,7 @@ class WeatherApiProvider {
                 if (response.isSuccessful && response.body() != null) {
                     Log.d(TAG, "Response: ${response.body()}")
                     context.viewModel.setWeatherItem(response.body()!!)
-                    context.viewModel.setIsWeatherLoad(true)
+                    context.viewModel.setIsWeatherCityLoad(true)
                     context.viewModel.setIsLocationCityLoad(true)
                 } else {
                     Log.e(TAG, "Error Fetching WeatherItem")

@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.setIsWeatherLoad(false)
+        viewModel.setIsWeatherCityLoad(false)
         viewModel.setIsLocationLoad(false)
         viewModel.setIsLocationCityLoad(false)
 

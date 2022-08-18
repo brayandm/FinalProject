@@ -14,10 +14,11 @@ import java.util.*
 
 class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(), ViewModelProvider.Factory {
 
-    private val _location = MutableLiveData(Location(.0,.0))
+    private val _location = MutableLiveData(Location())
     private val _locationCity = MutableLiveData(LocationCity("Barcelona","Spain"))
     private val _weatherItem = MutableLiveData<WeatherItem>()
     private val _isWeatherLoad = MutableLiveData(false)
+    private val _isWeatherCityLoad = MutableLiveData(false)
     private val _isLocationLoad = MutableLiveData(false)
     private val _isLocationCityLoad = MutableLiveData(false)
     private val _indexBottomNavigation = MutableLiveData(0)
@@ -28,6 +29,7 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
     val locationCity : LiveData<LocationCity> = _locationCity
     val weatherItem : LiveData<WeatherItem> = _weatherItem
     val isWeatherLoad : LiveData<Boolean> = _isWeatherLoad
+    val isWeatherCityLoad : LiveData<Boolean> = _isWeatherCityLoad
     val isLocationLoad : LiveData<Boolean> = _isLocationLoad
     val isLocationCityLoad : LiveData<Boolean> = _isLocationCityLoad
     val indexBottomNavigation : LiveData<Int> = _indexBottomNavigation
@@ -52,6 +54,11 @@ class MainViewModel(private val repository: CityFavoriteRepository) : ViewModel(
     fun setIsWeatherLoad(isWeatherLoad : Boolean)
     {
         _isWeatherLoad.postValue(isWeatherLoad)
+    }
+
+    fun setIsWeatherCityLoad(isWeatherCityLoad : Boolean)
+    {
+        _isWeatherCityLoad.postValue(isWeatherCityLoad)
     }
 
     fun setIsLocationLoad(isLocationLoad : Boolean)
